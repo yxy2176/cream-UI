@@ -1,40 +1,28 @@
-# vue-element
+## cream-UI 简介
+基于Vue3框架的UI组件库
 
-This template should help get you started developing with Vue 3 in Vite.
+## 技术栈
+- Vue 3
+- TypeScript
+- Vite
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
+## 项目运行
+```
+// 安装依赖
 npm install
-```
 
-### Compile and Hot-Reload for Development
-
-```sh
+// 本地运行
 npm run dev
-```
 
-### Type-Check, Compile and Minify for Production
+// 本地文档预览
+npm run docs:dev
 
-```sh
+// 编译打包
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
-# cream-UI
+## 功能组件
+- [x] Button组件
+   - 类型type：primary、success、info、warning、danger
+   - 尺寸size：small、default、large
+   - 禁用disable：true、false
