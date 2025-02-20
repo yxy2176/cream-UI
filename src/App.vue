@@ -1,22 +1,30 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
+    <img src="./assets/logo.svg" alt="Vue logo" class="logo" width="125" height="125" />
   </header>
-
   <main>
-    <TheWelcome />
+    <Button ref="buttonRef">Test Button</Button>
+    <Button plain>Plain Button</Button>
+    <Button round>Round Button</Button>
+    <Button circle>YXY</Button>
+    <Button disabled>Disabled Button</Button><br /><br />
+    <Button type="primary">Primary</Button>
+    <Button type="success">Success</Button>
+    <Button type="info">Info</Button>
+    <Button type="warning">Warning</Button>
+    <Button type="danger">Danger</Button><br /><br />
+    <Button type="primary" plain>Primary</Button>
+    <Button type="success" plain>Success</Button>
+    <Button type="info" plain>Info</Button>
+    <Button type="warning" plain>Warning</Button>
+    <Button type="danger" plain>Danger</Button><br /><br />
+    <Button size="large">Large</Button>
+    <Button size="small">Small</Button>
   </main>
 </template>
-
+<script setup lang="ts">
+import Button from './components/Button/creamButton.vue'
+</script>
 <style scoped>
 header {
   line-height: 1.5;
@@ -36,12 +44,6 @@ header {
 
   .logo {
     margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
   }
 }
 </style>
