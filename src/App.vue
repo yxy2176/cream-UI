@@ -20,10 +20,28 @@
     <Button type="danger" plain>Danger</Button><br /><br />
     <Button size="large">Large</Button>
     <Button size="small">Small</Button>
+
+    <Collapse>
+      <CollapseItem name="a">
+        <template #title>
+          <h1>nice title</h1>
+        </template>
+        <h1>headlint title</h1>
+        <div>this is content a aaa</div>
+      </CollapseItem>
+      <CollapseItem name="b" title="nice title b item b">
+        <div>this is bbbbb test</div>
+      </CollapseItem>
+      <CollapseItem name="c" title="nice cccc" disabled>
+        <div>this is cccc test</div>
+      </CollapseItem>
+    </Collapse>
   </main>
 </template>
 <script setup lang="ts">
-import Button from './components/Button/creamButton.vue'
+import Button from './components/Button/Button.vue'
+import Collapse from './components/Collapse/Collapse.vue'
+import CollapseItem from './components/Collapse/CollapseItem.vue'
 </script>
 <style scoped>
 header {

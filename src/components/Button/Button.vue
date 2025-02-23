@@ -24,7 +24,7 @@ import { ref } from 'vue'
 import type { ButtonProps } from './types'
 // import { buttonProps } from './types';
 defineOptions({
-  name: 'xyButton',
+  name: 'XYButton',
 })
 withDefaults(defineProps<ButtonProps>(), {
   nativeType: 'button',
