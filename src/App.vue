@@ -21,7 +21,7 @@
     <Button size="large">Large</Button>
     <Button size="small">Small</Button>
 
-    <Collapse>
+    <Collapse v-model:modal-value="openedValue" :accordion="false">
       <CollapseItem name="a">
         <template #title>
           <h1>nice title</h1>
@@ -36,12 +36,15 @@
         <div>this is cccc test</div>
       </CollapseItem>
     </Collapse>
+    <span>openedValue:{{ openedValue }}</span>
   </main>
 </template>
 <script setup lang="ts">
+import { ref } from 'vue'
 import Button from './components/Button/Button.vue'
 import Collapse from './components/Collapse/Collapse.vue'
 import CollapseItem from './components/Collapse/CollapseItem.vue'
+const openedValue = ref(['a'])
 </script>
 <style scoped>
 header {
