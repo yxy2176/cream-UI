@@ -2,6 +2,7 @@
   <header>
     <img src="./assets/logo.svg" alt="Vue logo" class="logo" width="125" height="125" />
   </header>
+  <font-awesome-icon icon="fa-solid fa-user-secret" />
   <main>
     <Button ref="buttonRef">Test Button</Button>
     <Button plain>Plain Button</Button>
