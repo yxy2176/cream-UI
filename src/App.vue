@@ -2,7 +2,9 @@
   <header>
     <img src="./assets/logo.svg" alt="Vue logo" class="logo" width="125" height="125" />
   </header>
-  <font-awesome-icon icon="fa-solid fa-user-secret" />
+  <!-- <font-awesome-icon icon="fa-solid fa-user-secret" /> -->
+  <Icon icon="fa-solid fa-user-secret" />
+  <Icon icon="arrow-up" size="2xl" type="danger" color="yellow" />
   <main>
     <Button ref="buttonRef">Test Button</Button>
     <Button plain>Plain Button</Button>
@@ -45,6 +47,7 @@ import { ref } from 'vue'
 import Button from './components/Button/Button.vue'
 import Collapse from './components/Collapse/Collapse.vue'
 import CollapseItem from './components/Collapse/CollapseItem.vue'
+import Icon from './components/Icon/icon.vue'
 const openedValue = ref(['a'])
 </script>
 <style scoped>

@@ -1,0 +1,24 @@
+.xy-icon {
+  --xy-icon-color: inherit;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  fill: currentColor;
+  color: var(--xy-icon-color);
+  font-size: inherit;
+}
+
+@each $val in primary, info, success, warning, danger {
+  .xy-icon--$(val) {
+    --xy-icon-color: var(--var-color-$(val));
+  }
+}
+
+/* 效果类似于 */
+/* .vk-icon--primary {
+    --vk-icon-color: var(--vk-color-primary);
+  }
+  .vk-icon--info {
+    --vk-icon-color: var(--vk-color-info);
+  } */
