@@ -10,10 +10,12 @@
       'is-circle': circle,
       'is-disabled': disabled,
     }"
-    :disabled="disabled"
+    :disabled="disabled || loading"
     :autofocus="autofocus"
     :type="nativeType"
   >
+    <Icon icon="spinner" spin v-if="loading" />
+    <Icon :icon="icon" v-if="icon" />
     <span>
       <slot />
     </span>
@@ -22,7 +24,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { ButtonProps } from './types'
-// import { buttonProps } from './types';
+import Icon from '../Icon/icon.vue'
 defineOptions({
   name: 'XYButton',
 })

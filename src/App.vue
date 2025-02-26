@@ -22,7 +22,10 @@
     <Button type="warning" plain>Warning</Button>
     <Button type="danger" plain>Danger</Button><br /><br />
     <Button size="large">Large</Button>
-    <Button size="small">Small</Button>
+    <!-- 加上icon以后 -->
+    <Button size="small">Small</Button><br /><br />
+    <Button size="large" loading>Loading</Button>
+    <Button size="large" icon="arrow-up">Icon</Button>
 
     <Collapse v-model:modal-value="openedValue" :accordion="false">
       <CollapseItem name="a">
