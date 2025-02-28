@@ -10,7 +10,8 @@
       ref="triggerNode"
     />
     <div ref="overlayNode"><h1>Hello Tooltip</h1></div> -->
-    <Tooltip placement="right" :trigger="trigger">
+    <!-- <Tooltip placement="right" :trigger="trigger"> -->
+    <Tooltip placement="right" :trigger="trigger" manual ref="tooltipRef">
       <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
       <template #content>
         <h1>Hello Tooltip</h1>
@@ -22,8 +23,8 @@
   <Icon icon="arrow-up" size="2xl" type="danger" color="yellow" />
   <main>
     <div class="buttonPart">
-      <Button ref="buttonRef">Test Button</Button>
-      <Button plain>Plain Button</Button>
+      <Button ref="buttonRef" @click="open">Test Button</Button>
+      <Button plain @click="close">Plain Button</Button>
       <Button round>Round Button</Button>
       <Button circle>YXY</Button>
       <Button disabled>Disabled Button</Button><br /><br />
@@ -75,6 +76,7 @@ import Icon from './components/Icon/Icon.vue'
 // import { createPopper } from '@popperjs/core'
 // import type { Instance } from '@popperjs/core'
 import Tooltip from './components/ToolTip/Tooltip.vue'
+import type { TooltipInstance } from './components/ToolTip/type'
 // button部分
 const buttonRef = ref<ButtonInstance | null>(null)
 
@@ -84,6 +86,13 @@ const openedValue = ref(['a'])
 // Tooltip部分
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const trigger = ref<any>('click')
+const tooltipRef = ref<TooltipInstance>()
+const open = () => {
+  tooltipRef?.value?.show()
+}
+const close = () => {
+  tooltipRef?.value?.hide()
+}
 </script>
 <style scoped>
 header {

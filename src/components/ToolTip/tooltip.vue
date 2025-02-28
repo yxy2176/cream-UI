@@ -13,8 +13,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { reactive, ref, watch } from 'vue'
-import type { TooltipProps, TooptipEmits } from './type'
+import { onUnmounted, reactive, ref, watch } from 'vue'
+import type { TooltipInstance, TooltipProps, TooptipEmits } from './type'
 import { createPopper } from '@popperjs/core'
 import type { Instance } from '@popperjs/core'
 import useClickOutside from '@/hooks/useClickOutside'
@@ -60,7 +60,23 @@ const attachEvents = () => {
   }
 }
 // 调用事件
-attachEvents()
+// attachEvents()
+if (!props.manual) {
+  attachEvents()
+} else {
+  watch(
+    () => props.manual,
+    (isManual) => {
+      // 手动控制的模式，在这种模式下，组件不再依赖自动的事件触发机制，因此需要移除之前绑定的事件处理函数
+      if (isManual) {
+        events = {}
+        outerEvents = {}
+      } else {
+        attachEvents()
+      }
+    },
+  )
+}
 
 watch(
   () => props.trigger,
@@ -86,11 +102,24 @@ watch(
       }
     }
   },
+  // flush 选项：用于控制回调函数的执行时机
+  // 有三个可选值：'pre'、'post' 和 'sync'，默认值是 'pre'
+  // 当设置为 { flush: 'post' } 时，意味着 watch 的回调函数会在 DOM 更新之后执行
+  { flush: 'post' },
 )
 
 useClickOutside(popperContainerNode, () => {
-  if (props.trigger == 'click' && isOpen.value) {
+  if (props.trigger == 'click' && isOpen.value && !props.manual) {
     close()
   }
+})
+
+onUnmounted(() => {
+  popperInstance?.destroy()
+})
+
+defineExpose<TooltipInstance>({
+  show: open,
+  hide: close,
 })
 </script>
