@@ -1,7 +1,7 @@
 <template>
   <header>
     <!-- <img src="./assets/logo.svg" alt="Vue logo" class="logo" width="125" height="125" /> -->
-    <img
+    <!-- <img
       alt="Vue logo"
       class="logo"
       src="./assets/logo.svg"
@@ -9,7 +9,13 @@
       height="125"
       ref="triggerNode"
     />
-    <div ref="overlayNode"><h1>Hello Tooltip</h1></div>
+    <div ref="overlayNode"><h1>Hello Tooltip</h1></div> -->
+    <Tooltip placement="right" :trigger="trigger">
+      <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+      <template #content>
+        <h1>Hello Tooltip</h1>
+      </template>
+    </Tooltip>
   </header>
   <!-- <font-awesome-icon icon="fa-solid fa-user-secret" /> -->
   <Icon icon="fa-solid fa-user-secret" />
@@ -55,14 +61,16 @@
   </main>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
+// import { onMounted } from 'vue'
 import Button from './components/Button/Button.vue'
 import type { ButtonInstance } from './components/Button/types'
 import Collapse from './components/Collapse/Collapse.vue'
 import CollapseItem from './components/Collapse/CollapseItem.vue'
 import Icon from './components/Icon/icon.vue'
-import { createPopper } from '@popperjs/core'
-import type { Instance } from '@popperjs/core'
+// import { createPopper } from '@popperjs/core'
+// import type { Instance } from '@popperjs/core'
+import Tooltip from './components/ToolTip/tooltip.vue'
 // button部分
 const buttonRef = ref<ButtonInstance | null>(null)
 
@@ -70,20 +78,23 @@ const buttonRef = ref<ButtonInstance | null>(null)
 const openedValue = ref(['a'])
 
 // 试用popper.js
-const overlayNode = ref<HTMLElement>() // 覆盖元素，即要定位的元素
-const triggerNode = ref<HTMLElement>() // 触发元素，即 Popper 定位所基于的元素
-let popperInstance: Instance | null = null
-onMounted(() => {
-  if (buttonRef.value) {
-    console.log('buttonRef', buttonRef.value.ref)
-  }
-  if (overlayNode.value && triggerNode.value) {
-    popperInstance = createPopper(triggerNode.value, overlayNode.value, { placement: 'right' })
-  }
-  setTimeout(() => {
-    popperInstance?.setOptions({ placement: 'bottom' })
-  }, 2000)
-})
+// const overlayNode = ref<HTMLElement>() // 覆盖元素，即要定位的元素
+// const triggerNode = ref<HTMLElement>() // 触发元素，即 Popper 定位所基于的元素
+// let popperInstance: Instance | null = null
+// onMounted(() => {
+//   if (buttonRef.value) {
+//     console.log('buttonRef', buttonRef.value.ref)
+//   }
+//   if (overlayNode.value && triggerNode.value) {
+//     popperInstance = createPopper(triggerNode.value, overlayNode.value, { placement: 'right' })
+//   }
+//   setTimeout(() => {
+//     popperInstance?.setOptions({ placement: 'bottom' })
+//   }, 2000)
+// })
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const trigger = ref<any>('hover')
 </script>
 <style scoped>
 header {
