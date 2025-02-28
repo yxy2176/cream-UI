@@ -21,43 +21,47 @@
   <Icon icon="fa-solid fa-user-secret" />
   <Icon icon="arrow-up" size="2xl" type="danger" color="yellow" />
   <main>
-    <Button ref="buttonRef">Test Button</Button>
-    <Button plain>Plain Button</Button>
-    <Button round>Round Button</Button>
-    <Button circle>YXY</Button>
-    <Button disabled>Disabled Button</Button><br /><br />
-    <Button type="primary">Primary</Button>
-    <Button type="success">Success</Button>
-    <Button type="info">Info</Button>
-    <Button type="warning">Warning</Button>
-    <Button type="danger">Danger</Button><br /><br />
-    <Button type="primary" plain>Primary</Button>
-    <Button type="success" plain>Success</Button>
-    <Button type="info" plain>Info</Button>
-    <Button type="warning" plain>Warning</Button>
-    <Button type="danger" plain>Danger</Button><br /><br />
-    <Button size="large">Large</Button>
-    <!-- 加上icon以后 -->
-    <Button size="small">Small</Button><br /><br />
-    <Button size="large" loading>Loading</Button>
-    <Button size="large" icon="arrow-up">Icon</Button>
+    <div class="buttonPart">
+      <Button ref="buttonRef">Test Button</Button>
+      <Button plain>Plain Button</Button>
+      <Button round>Round Button</Button>
+      <Button circle>YXY</Button>
+      <Button disabled>Disabled Button</Button><br /><br />
+      <Button type="primary">Primary</Button>
+      <Button type="success">Success</Button>
+      <Button type="info">Info</Button>
+      <Button type="warning">Warning</Button>
+      <Button type="danger">Danger</Button><br /><br />
+      <Button type="primary" plain>Primary</Button>
+      <Button type="success" plain>Success</Button>
+      <Button type="info" plain>Info</Button>
+      <Button type="warning" plain>Warning</Button>
+      <Button type="danger" plain>Danger</Button><br /><br />
+      <Button size="large">Large</Button>
+      <!-- 加上icon以后 -->
+      <Button size="small">Small</Button><br /><br />
+      <Button size="large" loading>Loading</Button>
+      <Button size="large" icon="arrow-up">Icon</Button>
+    </div>
 
-    <Collapse v-model:modal-value="openedValue" :accordion="false">
-      <CollapseItem name="a">
-        <template #title>
-          <h1>nice title</h1>
-        </template>
-        <h1>headlint title</h1>
-        <div>this is content a aaa</div>
-      </CollapseItem>
-      <CollapseItem name="b" title="nice title b item b">
-        <div>this is bbbbb test</div>
-      </CollapseItem>
-      <CollapseItem name="c" title="nice cccc" disabled>
-        <div>this is cccc test</div>
-      </CollapseItem>
-    </Collapse>
-    <span>openedValue:{{ openedValue }}</span>
+    <div class="collapsePart">
+      <Collapse v-model:modal-value="openedValue" :accordion="false">
+        <CollapseItem name="a">
+          <template #title>
+            <h1>nice title</h1>
+          </template>
+          <h1>headlint title</h1>
+          <div>this is content a aaa</div>
+        </CollapseItem>
+        <CollapseItem name="b" title="nice title b item b">
+          <div>this is bbbbb test</div>
+        </CollapseItem>
+        <CollapseItem name="c" title="nice cccc" disabled>
+          <div>this is cccc test</div>
+        </CollapseItem>
+      </Collapse>
+      <span>openedValue:{{ openedValue }}</span>
+    </div>
   </main>
 </template>
 <script setup lang="ts">
@@ -77,22 +81,7 @@ const buttonRef = ref<ButtonInstance | null>(null)
 // Collapse部分
 const openedValue = ref(['a'])
 
-// 试用popper.js
-// const overlayNode = ref<HTMLElement>() // 覆盖元素，即要定位的元素
-// const triggerNode = ref<HTMLElement>() // 触发元素，即 Popper 定位所基于的元素
-// let popperInstance: Instance | null = null
-// onMounted(() => {
-//   if (buttonRef.value) {
-//     console.log('buttonRef', buttonRef.value.ref)
-//   }
-//   if (overlayNode.value && triggerNode.value) {
-//     popperInstance = createPopper(triggerNode.value, overlayNode.value, { placement: 'right' })
-//   }
-//   setTimeout(() => {
-//     popperInstance?.setOptions({ placement: 'bottom' })
-//   }, 2000)
-// })
-
+// Tooltip部分
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const trigger = ref<any>('hover')
 </script>
