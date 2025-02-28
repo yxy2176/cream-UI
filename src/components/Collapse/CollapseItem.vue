@@ -26,7 +26,7 @@
 import { computed, inject } from 'vue'
 import { collapseContextKey } from './types'
 import type { CollapseItemProps } from './types'
-import Icon from '../Icon/icon.vue'
+import Icon from '../Icon/Icon.vue'
 defineOptions({
   name: 'XYCollapseItem',
 })
