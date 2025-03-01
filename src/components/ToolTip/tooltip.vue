@@ -6,10 +6,11 @@
       <slot />
     </div>
     <Transition :name="transition">
-      <div v-if="isOpen" class="xy-tooltip__content" ref="popperNode">
+      <div v-if="isOpen" class="xy-tooltip__popper" ref="popperNode">
         <slot name="content">
           {{ content }}
         </slot>
+        <div id="arrow" data-popper-arrow></div>
       </div>
     </Transition>
   </div>
@@ -22,7 +23,9 @@ import { createPopper } from '@popperjs/core'
 import type { Instance } from '@popperjs/core'
 import useClickOutside from '@/hooks/useClickOutside'
 import { debounce } from 'lodash-es'
-
+defineOptions({
+  name: 'XYToolTip',
+})
 const emits = defineEmits<TooptipEmits>()
 const props = withDefaults(defineProps<TooltipProps>(), {
   placement: 'bottom',
@@ -88,6 +91,14 @@ const togglePopper = () => {
 const popperOptions = computed(() => {
   return {
     placements: props.placement,
+    modifiers: [
+      {
+        name: 'offset',
+        options: {
+          offset: [0, 9],
+        },
+      },
+    ],
     ...props.popperOptions,
   }
 })

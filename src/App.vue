@@ -16,7 +16,6 @@
     <Tooltip
       placement="right"
       :trigger="trigger"
-      manual
       ref="tooltipRef"
       :open-delay="1000"
       :close-delay="1000"
@@ -86,7 +85,7 @@ import Icon from './components/Icon/Icon.vue'
 // import type { Instance } from '@popperjs/core'
 import Tooltip from './components/ToolTip/Tooltip.vue'
 import type { TooltipInstance } from './components/ToolTip/type'
-import type { Options } from '@popperjs/core'
+// import type { Options } from '@popperjs/core'
 import type { NameType } from './components/Collapse/types'
 // button部分
 const buttonRef = ref<ButtonInstance | null>(null)
@@ -97,6 +96,8 @@ const openedValue = ref<NameType[]>(['a'])
 // Tooltip部分
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const trigger = ref<any>('click')
+// const trigger = ref<any>('click')
+
 const tooltipRef = ref<TooltipInstance>()
 const open = () => {
   tooltipRef?.value?.show()
@@ -105,7 +106,7 @@ const close = () => {
   tooltipRef?.value?.hide()
 }
 
-const options: Partial<Options> = { placement: 'right-end', strategy: 'fixed' }
+// const options: Partial<Options> = { placement: 'right-end', strategy: 'fixed' }
 </script>
 <style scoped>
 header {
