@@ -5,17 +5,20 @@
     <div class="xy-tooltip__trigger" ref="triggerNode" v-on="events">
       <slot />
     </div>
-    <div v-if="isOpen" class="xy-tooltip__content" ref="popperNode">
-      <slot name="content">
-        {{ content }}
-      </slot>
-    </div>
+    <Transition :name="transition">
+      <div v-if="isOpen" class="xy-tooltip__content" ref="popperNode">
+        <slot name="content">
+          {{ content }}
+        </slot>
+      </div>
+    </Transition>
   </div>
 </template>
 <script setup lang="ts">
-import { onUnmounted, reactive, ref, watch } from 'vue'
+import { computed, onUnmounted, reactive, ref, watch } from 'vue'
 import type { TooltipInstance, TooltipProps, TooptipEmits } from './type'
 import { createPopper } from '@popperjs/core'
+// import { placements } from '@popperjs/core'
 import type { Instance } from '@popperjs/core'
 import useClickOutside from '@/hooks/useClickOutside'
 
@@ -23,6 +26,7 @@ const emits = defineEmits<TooptipEmits>()
 const props = withDefaults(defineProps<TooltipProps>(), {
   placement: 'bottom',
   trigger: 'hover',
+  transition: 'fade',
 })
 const triggerNode = ref<HTMLElement>()
 const popperNode = ref<HTMLElement>()
@@ -50,6 +54,12 @@ const togglePopper = () => {
   isOpen.value = !isOpen.value
   emits('visible-change', isOpen.value)
 }
+const popperOptions = computed(() => {
+  return {
+    placements: props.placement,
+    ...props.popperOptions,
+  }
+})
 
 const attachEvents = () => {
   if (props.trigger === 'hover') {
@@ -94,9 +104,10 @@ watch(
   (newValue) => {
     if (newValue) {
       if (popperNode.value && triggerNode.value) {
-        popperInstance = createPopper(triggerNode.value, popperNode.value, {
-          placement: props.placement,
-        })
+        // popperInstance = createPopper(triggerNode.value, popperNode.value, {
+        //   placement: props.placement,
+        // })
+        popperInstance = createPopper(triggerNode.value, popperNode.value, popperOptions.value)
       } else {
         popperInstance?.destroy()
       }
