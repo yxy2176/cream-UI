@@ -21,12 +21,15 @@ import { createPopper } from '@popperjs/core'
 // import { placements } from '@popperjs/core'
 import type { Instance } from '@popperjs/core'
 import useClickOutside from '@/hooks/useClickOutside'
+import { debounce } from 'lodash-es'
 
 const emits = defineEmits<TooptipEmits>()
 const props = withDefaults(defineProps<TooltipProps>(), {
   placement: 'bottom',
   trigger: 'hover',
   transition: 'fade',
+  openDelay: 0,
+  closeDelay: 0,
 })
 const triggerNode = ref<HTMLElement>()
 const popperNode = ref<HTMLElement>()
@@ -39,21 +42,49 @@ const isOpen = ref(false)
 let events: Record<string, any> = reactive({})
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let outerEvents: Record<string, any> = reactive({})
+let openTimes = 0
+let closeTimes = 0
 
 const open = () => {
+  openTimes++
+  console.log('openTimes: ', openTimes)
   isOpen.value = true
   emits('visible-change', true)
 }
 
 const close = () => {
+  closeTimes++
+  console.log('closeTimes: ', closeTimes)
   isOpen.value = false
   emits('visible-change', false)
 }
 
-const togglePopper = () => {
-  isOpen.value = !isOpen.value
-  emits('visible-change', isOpen.value)
+const openDebounce = debounce(open, props.openDelay)
+const closeDebounce = debounce(close, props.closeDelay)
+
+const openFinal = () => {
+  closeDebounce.cancel()
+  openDebounce()
 }
+
+const closeFinal = () => {
+  openDebounce.cancel() // 取消当前正在进行的打开操作的防抖计时
+  closeDebounce() // 在防抖时间内再次调用 closeDebounce，则会重新计时，只有在防抖时间结束后，真正的关闭操作才会执行
+}
+
+// const togglePopper = () => {
+//   isOpen.value = !isOpen.value
+//   emits('visible-change', isOpen.value)
+// }
+
+const togglePopper = () => {
+  if (isOpen.value) {
+    closeFinal()
+  } else {
+    openFinal()
+  }
+}
+
 const popperOptions = computed(() => {
   return {
     placements: props.placement,
@@ -63,8 +94,8 @@ const popperOptions = computed(() => {
 
 const attachEvents = () => {
   if (props.trigger === 'hover') {
-    events['mouseenter'] = open
-    outerEvents['mouseleave'] = close
+    events['mouseenter'] = openFinal
+    outerEvents['mouseleave'] = closeFinal
   } else if (props.trigger === 'click') {
     events['click'] = togglePopper
   }
@@ -121,7 +152,7 @@ watch(
 
 useClickOutside(popperContainerNode, () => {
   if (props.trigger == 'click' && isOpen.value && !props.manual) {
-    close()
+    closeFinal()
   }
 })
 
@@ -130,7 +161,7 @@ onUnmounted(() => {
 })
 
 defineExpose<TooltipInstance>({
-  show: open,
-  hide: close,
+  show: openFinal,
+  hide: closeFinal,
 })
 </script>

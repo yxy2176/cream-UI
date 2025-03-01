@@ -7,6 +7,8 @@ export interface TooltipProps {
   manual?: boolean
   transition?: string
   popperOptions?: Partial<Options> //Partial<T> 的作用是将类型 T 中的所有属性转换为可选属性
+  openDelay?: number
+  closeDelay?: number
 }
 
 export interface TooptipEmits {

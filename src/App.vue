@@ -12,7 +12,15 @@
     <div ref="overlayNode"><h1>Hello Tooltip</h1></div> -->
     <!-- <Tooltip placement="right" :trigger="trigger"> -->
     <!-- <Tooltip placement="right" :trigger="trigger" ref="tooltipRef" :popper-options="options"> -->
-    <Tooltip placement="right" :trigger="trigger" manual ref="tooltipRef" :popper-options="options">
+    <!-- <Tooltip placement="right" :trigger="trigger" manual ref="tooltipRef" :popper-options="options"> -->
+    <Tooltip
+      placement="right"
+      :trigger="trigger"
+      manual
+      ref="tooltipRef"
+      :open-delay="1000"
+      :close-delay="1000"
+    >
       <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
       <template #content>
         <h1>Hello Tooltip</h1>
