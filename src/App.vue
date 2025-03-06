@@ -1,5 +1,6 @@
 <template>
   <header>
+    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
     <!-- <img src="./assets/logo.svg" alt="Vue logo" class="logo" width="125" height="125" /> -->
     <!-- <img
       alt="Vue logo"
@@ -71,6 +72,34 @@
       </Collapse>
       <span>openedValue:{{ openedValue }}</span>
     </div>
+
+    <!-- Image部分 -->
+    <div class="demo-container">
+      <h2>图片加载演示</h2>
+
+      <div class="image-wrapper">
+        <Image
+          :src="currentImage"
+          :alt="imageAlt"
+          :lazy="true"
+          :max-retries="3"
+          @load="handleImageLoad"
+          @error="handleImageError"
+        />
+      </div>
+
+      <div class="control-panel">
+        <button @click="loadRandomImage" class="reload-btn">
+          {{ hasError ? '重试加载' : '更换图片' }}
+        </button>
+        <button @click="triggerError" class="error-btn">测试错误</button>
+      </div>
+
+      <div class="status-info">
+        <p>当前状态: {{ statusText }}</p>
+        <p>重试次数: {{ retryCount }}</p>
+      </div>
+    </div>
   </main>
 </template>
 <script setup lang="ts">
@@ -87,6 +116,7 @@ import Tooltip from './components/ToolTip/Tooltip.vue'
 import type { TooltipInstance } from './components/ToolTip/type'
 // import type { Options } from '@popperjs/core'
 import type { NameType } from './components/Collapse/types'
+import Image from './components/Image/Image.vue'
 // button部分
 const buttonRef = ref<ButtonInstance | null>(null)
 
@@ -107,6 +137,52 @@ const close = () => {
 }
 
 // const options: Partial<Options> = { placement: 'right-end', strategy: 'fixed' }
+
+// image组件部分
+const imageAlt = ref('随机图片')
+const imageBase = 'https://picsum.photos/600/400?random='
+const currentImage = ref(imageBase + Math.random())
+const hasError = ref(false)
+const retryCount = ref(0)
+const statusText = ref('等待加载')
+
+// 图片加载成功处理
+const handleImageLoad = (event: Event) => {
+  const img = event.target as HTMLImageElement
+  imageAlt.value = `已加载的图片（尺寸: ${img.naturalWidth}x${img.naturalHeight}）`
+  statusText.value = `加载成功 ${img.naturalWidth}x${img.naturalHeight}`
+  hasError.value = false
+  retryCount.value = 0
+  console.log('图片加载成功:', img.src)
+}
+
+// 图片加载失败处理
+const handleImageError = (error: Event) => {
+  const img = error.target as HTMLImageElement
+  statusText.value = `加载失败: ${img.src}`
+  imageAlt.value = '图片加载失败'
+  hasError.value = true
+  retryCount.value++
+  console.error('图片加载失败:', error)
+
+  // 失败3次后切换备用图
+  if (retryCount.value >= 3) {
+    currentImage.value = '/fallback-image.jpg'
+    imageAlt.value = '备用图片'
+  }
+}
+
+// 加载新图片
+const loadRandomImage = () => {
+  statusText.value = '开始加载...'
+  imageAlt.value = `随机图片 #${Math.floor(Math.random() * 1000)}`
+  currentImage.value = imageBase + Math.random()
+}
+
+// 测试错误情况
+const triggerError = () => {
+  currentImage.value = 'https://invalid.url/test-image.jpg'
+}
 </script>
 <style scoped>
 header {
@@ -128,5 +204,65 @@ header {
   .logo {
     margin: 0 2rem 0 0;
   }
+}
+
+.demo-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  margin: 20px 0;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.control-panel {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.reload-btn,
+.error-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.reload-btn {
+  background: #1890ff;
+  color: white;
+}
+
+.error-btn {
+  background: #ff4d4f;
+  color: white;
+}
+
+.reload-btn:hover,
+.error-btn:hover {
+  opacity: 0.8;
+}
+
+.status-info {
+  margin-top: 15px;
+  padding: 10px;
+  background: #f8f8f8;
+  border-radius: 4px;
+}
+
+.status-info p {
+  margin: 5px 0;
+  color: #666;
 }
 </style>
