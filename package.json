@@ -17,7 +17,9 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "@popperjs/core": "^2.11.8",
+    "@types/file-saver": "^2.0.7",
     "@types/lodash-es": "^4.17.12",
+    "file-saver": "^2.0.5",
     "lodash-es": "^4.17.21",
     "postcss": "^8.5.3",
     "postcss-color-mix": "^1.1.0",
@@ -25,7 +27,8 @@
     "postcss-each-variables": "^0.3.0",
     "postcss-for": "^2.1.1",
     "postcss-nested": "^7.0.2",
-    "vue": "^3.5.13"
+    "vue": "^3.5.13",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.0",

@@ -100,6 +100,18 @@
         <p>重试次数: {{ retryCount }}</p>
       </div>
     </div>
+    <div class="table">
+      <!-- table组件部分 -->
+      <div class="parent-container">
+        <!-- <Table
+          :columns="columns"
+          :data="tableData"
+          @update:data="handleDataUpdate"
+          @update:columns="handleColumnsUpdate"
+        /> -->
+        <Table v-model:data="tableData" v-model:columns="columns" />
+      </div>
+    </div>
   </main>
 </template>
 <script setup lang="ts">
@@ -117,6 +129,7 @@ import type { TooltipInstance } from './components/ToolTip/type'
 // import type { Options } from '@popperjs/core'
 import type { NameType } from './components/Collapse/types'
 import Image from './components/Image/Image.vue'
+import Table from './components/Table/Table2.vue'
 // button部分
 const buttonRef = ref<ButtonInstance | null>(null)
 
@@ -183,7 +196,40 @@ const loadRandomImage = () => {
 const triggerError = () => {
   currentImage.value = 'https://invalid.url/test-image.jpg'
 }
+
+// table组件部分
+// const columns = ref([
+//   { label: '姓名', prop: 'name', sortable: true },
+//   { label: '年龄', prop: 'age', sortable: true },
+//   { label: '城市', prop: 'city' },
+// ])
+
+// const tableData = ref([
+//   { name: '张三', age: 25, city: '北京' },
+//   { name: '李四', age: 30, city: '上海' },
+//   { name: '王五', age: 28, city: '广州' },
+// ])
+const columns = ref([
+  { label: '姓名', prop: 'name', visible: true },
+  { label: '年龄', prop: 'age', visible: true },
+])
+
+const tableData = ref([
+  { name: '张三', age: 25, sales: 3000 }, // 会自动生成 sales 列
+  { name: '李四', age: 30, sales: 4500 },
+])
+
+// // 处理数据更新
+// const handleDataUpdate = (newData: any[]) => {
+//   tableData.value = newData
+// }
+
+// 处理列配置更新
+// const handleColumnsUpdate = (newColumns: any[]) => {
+//   columns.value = newColumns
+// }
 </script>
+
 <style scoped>
 header {
   line-height: 1.5;
@@ -264,5 +310,12 @@ header {
 .status-info p {
   margin: 5px 0;
   color: #666;
+}
+
+.table {
+  width: 600px;
+  height: 300px;
+  display: flex;
+  align-items: center;
 }
 </style>

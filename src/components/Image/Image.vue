@@ -73,14 +73,17 @@ let retryTimer: number | null = null
 const handleLoad = (event: Event) => {
   const img = event.target as HTMLImageElement
 
-  // 新增：过滤占位图加载事件
+  // 过滤占位图加载事件
   if (img.src === props.placeholder) return
 
   isLoading.value = false
   isError.value = false
   isLoaded.value = true
   emit('load', event)
-
+  // requestAnimationFrame用于在浏览器的下一帧渲染之前执行回调函数
+  // 它会根据浏览器的刷新率（通常是 60Hz，即每秒 60 帧）来安排回调函数的执行
+  // 相比于使用 setTimeout 或 setInterval 来实现动画，
+  // requestAnimationFrame 更加高效，因为它会与浏览器的渲染周期同步，避免不必要的重绘和性能浪费。
   requestAnimationFrame(() => {
     if (imgRef.value) {
       imgRef.value.style.opacity = '1'
